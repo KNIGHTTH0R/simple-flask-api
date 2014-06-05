@@ -87,7 +87,7 @@ Use $.ajax
    // GET
    $.ajax({
      type: 'GET'
-     url:'http://localhost:5000/api/status'
+     url:'http://127.0.0.1:5000/api/<key>'
    }).done(function(res){
      // success
    });
@@ -95,7 +95,7 @@ Use $.ajax
    // POST
    $.ajax({
      type: 'POST',
-     url:'http://localhost:5000/api/status',
+     url:'http://127.0.0.1:5000/api/<key>',
      data: '{"bar":"hoge"}',
      headers: {
        'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ Use $.ajax
    // DELETE
    $.ajax({
      type: 'DELETE',
-     url:'http://localhost:5000/api/status/guest'
+     url:'http://127.0.0.1:5000/api/<key>/<dict_key>'
    }).done(function(res){
      // success
    });
