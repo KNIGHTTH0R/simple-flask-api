@@ -1,7 +1,7 @@
 Simple Flask API
 =======================
 
-Create <name>.json by requesting to http://127.0.0.1:5000/api/<name> and create and update, get parameters.
+Create `<name>.json` by requesting to `http://127.0.0.1:5000/api/<name>` and create and update, get parameters.
 
 ========
 Install
@@ -11,12 +11,24 @@ if you use vertualenv,
 
 .. sourcecode:: sh
 
-   virtualenv -p python2.7 --no-site-packages --clear --distribute venv
-   source venv/bin/activate; pip install -r requirements.txt
+   $ virtualenv -p python2.7 --no-site-packages --clear --distribute venv
+   $ source venv/bin/activate; pip install -r requirements.txt
 
 ========
 Usage
 ========
+
+Run Server
+-------------
+
+.. sourcecode:: sh
+
+   $ python api.py
+     * Running on http://127.0.0.1:5000/
+     * Restarting with reloader
+
+Request and Response
+----------------------
 
 .. sourcecode:: sh
     
