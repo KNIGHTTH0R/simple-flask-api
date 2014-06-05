@@ -1,7 +1,7 @@
-Simple Flask API
-=======================
+Simple Web API by Python/Flask
+==============================
 
-Create `<name>.json` by requesting to `http://127.0.0.1:5000/api/<name>` and create and update, get parameters.
+A simple rest web API for setting/getting JSON file.
 
 ========
 Install
@@ -32,7 +32,7 @@ Use Curl
 
 .. sourcecode:: sh
     
-   ## create 
+   ## create <status>.json includes {<key>: <value>}
    $ curl http://127.0.0.1:5000/api/status -D - -X POST --data '{"mode": 1}' -H "Content-type: application/json"
    HTTP/1.0 200 OK
    Content-Type: application/json
@@ -44,7 +44,7 @@ Use Curl
      "mode": 1
    }
 
-   ## get
+   ## get <status>.json
    $ curl http://127.0.0.1:5000/api/status -D - -X GET
    HTTP/1.0 200 OK
    Content-Type: text/html; charset=utf-8
@@ -60,7 +60,7 @@ Use Curl
      "mode": 2
    }
 
-   ## add another key
+   ## add another key to <status>.json
    $ curl http://127.0.0.1:5000/api/status -D - -X POST --data '{"guest": true}' -H "Content-type: application/json"
    HTTP/1.0 200 OK
    Content-Type: application/json
@@ -70,7 +70,7 @@ Use Curl
      "mode": 2
    }
 
-   ## delete key
+   ## delete key to <status>.json
    $ curl http://127.0.0.1:5000/api/status/mode -D - -X DELETE
    HTTP/1.0 200 OK
    Content-Type: application/json
@@ -107,7 +107,7 @@ Use $.ajax
    // DELETE
    $.ajax({
      type: 'DELETE',
-     url:'http://localhost:5000/api/status/bar'
+     url:'http://localhost:5000/api/status/guest'
    }).done(function(res){
      // success
    });
