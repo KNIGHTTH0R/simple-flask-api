@@ -2,8 +2,9 @@
 
 import json
 from flask import Flask, request, jsonify, abort
+from db import get_item, set_item, remove_item
 
-FILE = 'status.json'
+
 app = Flask(__name__)
 
 
@@ -12,71 +13,44 @@ def hello():
     return 'hello:)'
 
 
-@app.route('/api/<status>', methods=['POST', 'GET'])
-def status(status):
+@app.route('/api/<key>', methods=['POST', 'GET'])
+def api(key):
     if request.method == 'POST':
-        return post_status(status, request)
+        return post_api(key, request)
     elif request.method == 'GET':
-        return get_status(status)
+        return get_api(key)
     else:
         return abort(405)
 
 
-@app.route('/api/<status>/<key>', methods=['DELETE'])
-def del_status(status, key):
+@app.route('/api/<key>/<dict_key>', methods=['DELETE'])
+def del_api(key, dict_key):
     if request.method == 'DELETE':
-        return delete_status(status, key)
+        return delete_api(key, dict_key)
     else:
         return abort(405)
 
 
-def get_status(status):
-    file_name = status + '.json'
-    try:
-        f = open(file_name, 'r')
-        data = json.load(f)
-        f.close()
-    except Exception:
+def get_api(key):
+    res = get_item(key)
+    if res is None:
         return "NOT FOUND"
-    return json.dumps(data)
+    else:
+        return jsonify(res)
 
 
-def post_status(status, request):
-    file_name = status + '.json'
+def post_api(key, request):
     req = json.loads(request.data)
-    try:
-        f = open(file_name, 'r')
-        data = json.load(f)
-    except Exception:
-        data = {}
-    for item in req.keys():
-        if item in set(data.keys()):
-            data.update(req)
-        else:
-            val = req[item]
-            data[item] = val
-    f = open(file_name, 'w')
-    json.dump(data, f, sort_keys=True, indent=4)
-    f.close()
-    return jsonify(data)
+    res = set_item(key, req)
+    return jsonify(res)
 
 
-def delete_status(status, key):
-    file_name = status + '.json'
-    req = key
-    try:
-        f = open(file_name, 'r')
-        data = json.load(f)
-    except Exception:
+def delete_api(key, dict_key):
+    res = remove_item(key, dict_key)
+    if res is None:
         return "NOT FOUND"
-    for item in data.keys():
-        if req in set(data.keys()):
-            data.pop(req)
-
-    f = open(file_name, 'w')
-    json.dump(data, f, sort_keys=True, indent=4)
-    f.close()
-    return jsonify(data)
+    else:
+        return jsonify(res)
 
 
 if __name__ == '__main__':
