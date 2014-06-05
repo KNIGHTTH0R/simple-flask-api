@@ -27,8 +27,8 @@ Run Server
      * Running on http://127.0.0.1:5000/
      * Restarting with reloader
 
-Request and Response
-----------------------
+Use Curl
+----------
 
 .. sourcecode:: sh
     
@@ -69,6 +69,48 @@ Request and Response
      "guest": true,
      "mode": 2
    }
+
+   ## delete key
+   $ curl http://127.0.0.1:5000/api/status/mode -D - -X DELETE
+   HTTP/1.0 200 OK
+   Content-Type: application/json
+
+   {
+     "guest": true
+   }
+
+Use $.ajax
+------------
+
+.. sourcecode:: javascript
+
+   // GET
+   $.ajax({
+     type: 'GET'
+     url:'http://localhost:5000/api/status'
+   }).done(function(res){
+     // success
+   });
+
+   // POST
+   $.ajax({
+     type: 'POST',
+     url:'http://localhost:5000/api/status',
+     data: '{"bar":"hoge"}',
+     headers: {
+       'Content-Type': 'application/json'
+     }
+   }).done(function(res){
+     // success
+   });
+
+   // DELETE
+   $.ajax({
+     type: 'DELETE',
+     url:'http://localhost:5000/api/status/bar'
+   }).done(function(res){
+     // success
+   });
 
 ========
 Test

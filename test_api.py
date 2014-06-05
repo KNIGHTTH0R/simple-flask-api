@@ -58,6 +58,17 @@ class APITest(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.json()['foo'], 'bar')
 
+    def test_delete_json(self):
+        # given
+        res = self.post_api('foo', 'bar')
+        self.assertEqual(res.status_code, 200)
+        print res.json()
+        # when
+        res = self.delete_api('foo')
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(len(res.json()), 0)
+
     def post_api(self, key, val):
         """POST /api/test"""
         res = requests.post(
@@ -71,5 +82,12 @@ class APITest(TestCase):
         """GET /api/test"""
         res = requests.get(
             '%s/api/%s' % (SERVER, FILE)
+        )
+        return res
+
+    def delete_api(self, key):
+        """DELETE /api/test"""
+        res = requests.delete(
+            '%s/api/%s/%s' % (SERVER, FILE, key)
         )
         return res

@@ -22,6 +22,14 @@ def status(status):
         return abort(405)
 
 
+@app.route('/api/<status>/<key>', methods=['DELETE'])
+def del_status(status, key):
+    if request.method == 'DELETE':
+        return delete_status(status, key)
+    else:
+        return abort(405)
+
+
 def get_status(status):
     file_name = status + '.json'
     try:
@@ -47,6 +55,24 @@ def post_status(status, request):
         else:
             val = req[item]
             data[item] = val
+    f = open(file_name, 'w')
+    json.dump(data, f, sort_keys=True, indent=4)
+    f.close()
+    return jsonify(data)
+
+
+def delete_status(status, key):
+    file_name = status + '.json'
+    req = key
+    try:
+        f = open(file_name, 'r')
+        data = json.load(f)
+    except Exception:
+        return "NOT FOUND"
+    for item in data.keys():
+        if req in set(data.keys()):
+            data.pop(req)
+
     f = open(file_name, 'w')
     json.dump(data, f, sort_keys=True, indent=4)
     f.close()
